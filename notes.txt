@@ -1,0 +1,22 @@
+installation of virtual environment 
+***virtualenv venv**
+activating virtual environment
+** venv/Scripts/activate***
+
+packages to download
+django
+djangorestframework
+
+
+start project
+django-admin startproject auth(project name) .
+to avoid nested auth folder add dot(.) in the end
+
+to create app 
+python manage.py startapp users
+
+
+
+knox documentation link https://jazzband.github.io/django-rest-knox/installation/#setup-knox
+
+django password reset link https://pypi.org/project/django-rest-passwordreset/
