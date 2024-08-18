@@ -1,10 +1,11 @@
 from .serializers import *
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.response import Response
 from knox.models import AuthToken
 from django.contrib.auth import get_user_model, authenticate
 User = get_user_model()
+
 
 # Create your views here.
 
@@ -55,5 +56,3 @@ class UserViewset(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
     
-
-   

@@ -27,3 +27,4 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(**validate_data)
         return user
     
+

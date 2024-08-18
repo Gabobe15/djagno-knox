@@ -29,6 +29,7 @@ AxiosInstance.interceptors.response.use(
 		if (error.response && error.response.status === 401) {
 			localStorage.removeItem('Token');
 			localStorage.removeItem('Email');
+			window.location.href = '/';
 		}
 	}
 );
