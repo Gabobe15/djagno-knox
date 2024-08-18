@@ -49,9 +49,6 @@ def password_reset_token_created(reset_password_token, *args, **kwargs):
     token = '{}'.format(reset_password_token.key)
     full_link = str(sitelink)+str('password-reset/')+str(token)
     
-    print(token)
-    print(full_link)
-    
     context = {
         'full_link': full_link,
         'email_address': reset_password_token.user.email

@@ -7,7 +7,7 @@ import MyButton from './forms/MyButton';
 import AxiosInstance from './AxiosInstance';
 
 // third party
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -17,7 +17,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import MyMessage from './MyMessage';
 
 const Login = () => {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const [showMessage, setMessage] = useState(false);
 
 	const schema = yup.object({
@@ -25,9 +25,11 @@ const Login = () => {
 			.string()
 			.email('Field expect email address')
 			.required('Email field is required'),
-		sex: yup.string().required('sex field is required'),
-		role: yup.string().required('role field is required'),
-		password: yup.string().required('Password field is required'),
+
+		password: yup
+			.string()
+			.required('Password field is required')
+			.min(8, 'Password should be a minimum of 8 characters'),
 	});
 	const { handleSubmit, control } = useForm({
 		resolver: yupResolver(schema),
@@ -39,14 +41,13 @@ const Login = () => {
 			password: data.password,
 		})
 			.then((response) => {
-				// localStorage.setItem('Token', response.data.token);
-				// localStorage.setItem('Email', response.data.user.email);
-				// navigate(`/home`);
-				console.log(response.data);
-				
+				localStorage.setItem('Token', response.data.token);
+				localStorage.setItem('Email', response.data.user.email);
+				navigate(`/home`);
 			})
-			.catch(() => {
+			.catch((error) => {
 				setMessage(true);
+				console.log('error message due to', error);
 			});
 	};
 
@@ -54,8 +55,10 @@ const Login = () => {
 		<div className="myBackground">
 			{showMessage ? (
 				<MyMessage
-					text={'Link has been sent to email account reset your password'}
-					colors={'#69c9AB'}
+					text={
+						'Invalid credentails, check your email and password or reset password'
+					}
+					colors={'#EC5A76'}
 				/>
 			) : null}
 			<form onSubmit={handleSubmit(submission)}>

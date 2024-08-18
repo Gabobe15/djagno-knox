@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-cl^#m%@kt2b(6jnwsyfynpimk(js6@fn$$_duw*o!bzm%l(dnz
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://imitate.email/.com']
 
 # Application definition
