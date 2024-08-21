@@ -1,9 +1,10 @@
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import '../App.css';
 import MyPassField from './forms/MyPassField';
 import MyButton from './forms/MyButton';
 import AxiosInstance from './AxiosInstance';
 import MyMessage from './MyMessage';
+
 
 // third party
 import { useNavigate, useParams } from 'react-router-dom';
@@ -57,12 +58,14 @@ const PasswordReset = () => {
 	return (
 		<div className="myBackground">
 			{message ? (
-				<MyMessage text={'Password reset successfully!!'} colors={"#69c9AB"} />
+				<MyMessage text={'Password reset successfully!!'} colors={'#69c9AB'} />
 			) : null}
 			<form onSubmit={handleSubmit(submission)}>
 				<Box className="whiteBox">
 					<Box className="itemBox">
-						<Box className="title">Password reset</Box>
+						<Box className="title">
+							Password reset
+						</Box>
 					</Box>
 
 					<Box className="itemBox">

@@ -12,6 +12,8 @@ import {
 	ListItemIcon,
 } from '@mui/material';
 
+import { RiLockPasswordFill } from 'react-icons/ri';
+
 // icons
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
@@ -40,7 +42,7 @@ const Navbar = (props) => {
 	const LogoutAllUsers = () => {
 		AxiosInstance.post(`logoutall/`, {}).then(() => {
 			localStorage.removeItem('Token');
-			localStorage.removeItem('Email');
+			localStorage.removeItem('role');
 			navigate('/');
 		});
 	};
@@ -93,12 +95,23 @@ const Navbar = (props) => {
 							</ListItemButton>
 						</ListItem>
 						<ListItem key={3} disablePadding>
+							<ListItemButton
+								to="/change-password"
+								selected={'/change-password' === path}
+							>
+								<ListItemIcon>
+									<RiLockPasswordFill />
+								</ListItemIcon>
+								<ListItemText primary={'Change password'} />
+							</ListItemButton>
+						</ListItem>
+						<ListItem key={4} disablePadding>
 							<ListItemButton component={NavLink} onClick={LogoutUser}>
 								<ListItemIcon>{<LogoutIcon />}</ListItemIcon>
 								<ListItemText primary={'Logout'} />
 							</ListItemButton>
 						</ListItem>
-						<ListItem key={4} disablePadding>
+						<ListItem key={5} disablePadding>
 							<ListItemButton component={NavLink} onClick={LogoutAllUsers}>
 								<ListItemIcon>{<LogoutIcon />}</ListItemIcon>
 								<ListItemText primary={'Logout All'} />

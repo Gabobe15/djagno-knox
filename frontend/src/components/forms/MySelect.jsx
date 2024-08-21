@@ -1,33 +1,54 @@
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import {
+	FormControl,
+	InputLabel,
+	Select,
+	MenuItem,
+	FormHelperText,
+} from '@mui/material';
+import { Controller } from 'react-hook-form';
 
-export default function MySelect() {
-	const [age, setAge] = useState('');
-
-	const handleChange = (event) => {
-		setAge(event.target.value);
-	};
-
+export function MySelectField({ label, name, control, defaultValue, options }) {
 	return (
-		<Box sx={{ minWidth: 120 }}>
-			<FormControl fullWidth>
-				<InputLabel id="demo-simple-select-label">Age</InputLabel>
-				<Select
-					labelId="demo-simple-select-label"
-					id="demo-simple-select"
-					value={age}
-					label="Age"
-					onChange={handleChange}
-				>
-					<MenuItem value={10}>Ten</MenuItem>
-					<MenuItem value={20}>Twenty</MenuItem>
-					<MenuItem value={30}>Thirty</MenuItem>
-				</Select>
-			</FormControl>
-		</Box>
+		<FormControl
+			variant="outlined"
+			className="myFormControl"
+			sx={{ width: '100%', flexGrow: 1 }}
+		>
+			<InputLabel id={`${name}-label`}>{label}</InputLabel>
+			<Controller
+				name={name}
+				control={control}
+				defaultValue={defaultValue}
+				render={({ field, fieldState: { error } }) => (
+					<>
+						<Select
+							{...field}
+							labelId={`${name}-label`}
+							id={`${name}-select`}
+							label={label}
+							error={!!error}
+							sx={{ width: '100%' }}
+						>
+							{options.map((option, index) => (
+								<MenuItem key={index} value={option.value}>
+									{option.label}
+								</MenuItem>
+							))}
+						</Select>
+						{error && (
+							<FormHelperText
+								sx={{
+									color: '#d32f2f',
+									display: 'flex',
+									flexDirection: 'column',
+								}}
+							>
+								{error.message}
+							</FormHelperText>
+						)}
+					</>
+				)}
+			/>
+		</FormControl>
 	);
 }

@@ -20,3 +20,18 @@ python manage.py startapp users
 knox documentation link https://jazzband.github.io/django-rest-knox/installation/#setup-knox
 
 django password reset link https://pypi.org/project/django-rest-passwordreset/
+
+python-dotenv - libary like eviron used in djagno 
+
+installation 
+pip install python-dotenv 
+
+create env file and write name of element you want to hide 
+
+in python setting.py
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
+SECRET_KEY = os.getenv('SECRET_KEY')

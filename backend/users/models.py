@@ -10,6 +10,16 @@ from django.core.mail import EmailMultiAlternatives
 from django.utils.html import strip_tags
 
 
+Role = (
+    ('student', 'Student'), #key value pair
+    ('teacher', 'Teacher'),
+    ('admin', 'Admin'),
+)
+
+SEX_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ]
 
 
 # Create your models here.
@@ -31,10 +41,14 @@ class CustomUserManager(BaseUserManager):
         
 
 class CustomUser(AbstractUser):
+    first_name = models.CharField(max_length=256, blank=True, null=True)
+    last_name = models.CharField(max_length=256, blank=True, null=True)
+    username = models.CharField(max_length=256, blank=True, null=True)
     email = models.EmailField(max_length=200, unique=True)
-    username = models.CharField(max_length=200, blank=True, null=True)
-    sex = models.CharField(max_length=10, blank=True, null=True)
-    role = models.CharField(max_length=20, blank=True, null=True)
+    sex = models.CharField(max_length=10, choices=SEX_CHOICES)
+    tel_no = models.CharField(max_length=256, blank=True, null=True)
+    country = models.CharField(max_length=256, blank=True, null=True)
+    role = models.CharField(max_length=20, choices=Role, default='student')
     created_at = models.DateTimeField(auto_now_add=True)
     
     objects = CustomUserManager()
@@ -42,6 +56,7 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     
+   
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(reset_password_token, *args, **kwargs):

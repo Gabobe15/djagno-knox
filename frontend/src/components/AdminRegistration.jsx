@@ -1,8 +1,9 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import '../App.css';
 import MyTextField from './forms/MyTextField';
 import MyPassField from './forms/MyPassField';
 import MyButton from './forms/MyButton';
+import { MySelectField } from './forms/MySelect';
 import { MyRadioGroup } from './forms/MyRadio';
 // import RadioButton from './forms/MyRadio';
 
@@ -16,11 +17,8 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 // yub and resolver
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import countryCodes from './Country';
-import { matchIsValidTel } from 'mui-tel-input';
-import { MyTelInputField } from './forms/MyTelInputField';
 
-const Register = () => {
+const AdminRegistration = () => {
 	const navigate = useNavigate();
 
 	const schema = yup.object({
@@ -31,8 +29,6 @@ const Register = () => {
 			.email('Field expect email address')
 			.required('Email field is required'),
 		sex: yup.string().required('sex field is required'),
-		tel_no: yup.string().required('Phone number is required'),
-		country: yup.string().required('Country is required'),
 		// role: yup.string().required('role field is required'),
 		password: yup
 			.string()
@@ -54,16 +50,14 @@ const Register = () => {
 	const { handleSubmit, control } = useForm({ resolver: yupResolver(schema) });
 	const submission = (data) => {
 		AxiosInstance.post(`register/`, {
-			first_name: data.first_name?.toLowerCase(),
-			last_name: data.last_name?.toLowerCase(),
-			email: data.email?.toLowerCase(),
+			first_name: data.first_name,
+			last_name: data.last_name,
+			email: data.email,
 			sex: data.sex,
-			tel_no: data.tel_no.replace(/\s+/g, ''),
-			country: data.country?.toLowerCase(),
+			role: data.role,
 			password: data.password,
 		})
-			.then((res) => {
-				console.log(res.data);
+			.then(() => {
 				navigate('/');
 			})
 			.catch((error) => {
@@ -109,36 +103,6 @@ const Register = () => {
 						/>
 					</Box>
 					<Box className="itemBox">
-						<MyTelInputField
-							name={'tel_no'}
-							control={control}
-							defaultValue=""
-							label={'Telephone'}
-							rules={{
-								validate: (value) =>
-									matchIsValidTel(value, { onlyCountries: countryCodes }),
-							}}
-							defaultCountry="KE"
-						/>
-					</Box>
-					<Box className="itemBox">
-						<MyTextField
-							label={'Country'}
-							control={control}
-							name={'country'}
-							variant="outlined"
-						/>
-					</Box>
-					<Box className="itemBox">
-						<Typography
-							sx={{
-								marginRight: '10px',
-								fontSize: '20px',
-								marginLeft: '-15px',
-							}}
-						>
-							Sex:
-						</Typography>
 						<MyRadioGroup
 							label="Sex"
 							name="sex"
@@ -147,6 +111,20 @@ const Register = () => {
 							options={[
 								{ label: 'Female', value: 'female' },
 								{ label: 'Male', value: 'male' },
+							]}
+						/>
+					</Box>
+					<Box className="itemBox">
+						<MySelectField
+							label="Role"
+							control={control}
+							name="role"
+							defaultValue="student"
+							disabled={true}
+							options={[
+								{ label: 'Student', value: 'student' },
+								{ label: 'Teacher', value: 'teacher' },
+								{ label: 'Admin', value: 'admin' },
 							]}
 						/>
 					</Box>
@@ -176,4 +154,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default AdminRegistration;

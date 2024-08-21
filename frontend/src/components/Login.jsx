@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import '../App.css';
 import MyTextField from './forms/MyTextField';
@@ -8,7 +8,7 @@ import AxiosInstance from './AxiosInstance';
 
 // third party
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
@@ -19,6 +19,8 @@ import MyMessage from './MyMessage';
 const Login = () => {
 	const navigate = useNavigate();
 	const [showMessage, setMessage] = useState(false);
+
+
 
 	const schema = yup.object({
 		email: yup
@@ -42,7 +44,6 @@ const Login = () => {
 		})
 			.then((response) => {
 				localStorage.setItem('Token', response.data.token);
-				localStorage.setItem('Email', response.data.user.email);
 				navigate(`/home`);
 			})
 			.catch((error) => {

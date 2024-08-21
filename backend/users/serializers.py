@@ -3,6 +3,11 @@ from .models import *
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = '__all__'
+
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
@@ -15,12 +20,12 @@ class LoginSerializer(serializers.Serializer):
 class ListUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
-        fields = ['id','first_name', 'last_name','email','sex','role','created_at']
+        fields = ['id','first_name', 'last_name','email','sex','tel_no','country','role','created_at']
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User 
-        fields = ['id','first_name', 'last_name','email','sex','role','password']
+        fields = ['id','first_name', 'last_name','email','sex','tel_no','country','role','password']
         extra_kwargs = {'password': {'write_only': True}}
     
     def create(self, validate_data):

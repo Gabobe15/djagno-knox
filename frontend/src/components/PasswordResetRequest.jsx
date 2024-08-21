@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import '../App.css';
 import MyTextField from './forms/MyTextField';
 import MyButton from './forms/MyButton';
@@ -11,6 +11,8 @@ import { useState } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+
+import { MdOutlineLockReset } from 'react-icons/md';
 
 const PasswordResetRequest = () => {
 	const [message, setMessage] = useState(false);
@@ -45,6 +47,9 @@ const PasswordResetRequest = () => {
 			<form onSubmit={handleSubmit(submission)}>
 				<Box className="whiteBox">
 					<Box className="itemBox">
+						<IconButton>
+							<MdOutlineLockReset />
+						</IconButton>
 						<Box className="title">Request password reset</Box>
 					</Box>
 					<Box className="itemBox">
